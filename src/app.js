@@ -1,5 +1,5 @@
 import React from 'react';
-import { createElement } from './utils.js';
+import { createElement, pluralization } from './utils.js';
 import './styles.css';
 
 /**
@@ -30,7 +30,10 @@ function App({ store }) {
                 <div className='Item-title'>
                   {item.title}
                   {item.numberOfSelected &&
-                    `  |  Выделяли ${item.numberOfSelected} раз`}
+                    ` | Выделяли ${item.numberOfSelected} ${pluralization(
+                      item.numberOfSelected,
+                      ['раз', 'раза']
+                    )}`}
                 </div>
 
                 <div className='Item-actions'>

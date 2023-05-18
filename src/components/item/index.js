@@ -1,21 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import './style.css';
 
 function Item(props) {
   const callbacks = {
-    onDelete: (e) => {
-      e.stopPropagation();
-      props.onDelete(props.item.code);
+    onAddToCart: () => {
+      props.onAddToCart(props.item.code);
     },
   };
-
   return (
-    <div className={'Item'} onClick={callbacks.onClick}>
+    <div className={'Item'}>
       <div className='Item-code'>{props.item.code}</div>
       <div className='Item-title'>{props.item.title}</div>
+      <div className='Item-price'>{props.item.price} ₽</div>
       <div className='Item-actions'>
-        <button onClick={callbacks.onDelete}>Удалить</button>
+        <button onClick={callbacks.onAddToCart}>Добавить</button>
       </div>
     </div>
   );
@@ -25,13 +24,13 @@ Item.propTypes = {
   item: PropTypes.shape({
     code: PropTypes.number,
     title: PropTypes.string,
-    proce: PropTypes.string,
+    price: PropTypes.number,
   }).isRequired,
-  onDelete: PropTypes.func,
+  onAddToCart: PropTypes.func,
 };
 
 Item.defaultProps = {
-  onDelete: () => {},
+  onAddToCart: () => {},
 };
 
 export default React.memo(Item);

@@ -5,7 +5,7 @@ import { generateCode } from './utils';
  */
 class Store {
   constructor(initState = {}) {
-    this.state = initState;
+    this.state = { ...initState, cart: {} };
     this.listeners = []; // Слушатели изменений состояния
   }
 
@@ -57,11 +57,13 @@ class Store {
    * Удаление записи по коду
    * @param code
    */
-  deleteItem(code) {
+  addToCart(code) {
+    const item = this.state.list.find((item) => item.code === code);
+    const prevCount = this.state.cart[code] ? this.state.cart[code].count : 0;
+    const newCount = prevCount + 1;
     this.setState({
       ...this.state,
-      // Новый список, в котором не будет удаляемой записи
-      list: this.state.list.filter((item) => item.code !== code),
+      cart: { ...this.state.cart, [code]: { item, count: newCount } },
     });
   }
 }

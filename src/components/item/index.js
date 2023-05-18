@@ -14,7 +14,9 @@ function Item(props) {
       <div className='Item-title'>{props.item.title}</div>
       <div className='Item-price'>{props.item.price} ₽</div>
       <div className='Item-actions'>
-        <button onClick={callbacks.onAddToCart}>Добавить</button>
+        <button className='Item-btn' onClick={callbacks.onAddToCart}>
+          Добавить
+        </button>
       </div>
     </div>
   );

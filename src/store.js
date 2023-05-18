@@ -61,9 +61,10 @@ class Store {
     const item = this.state.list.find((item) => item.code === code);
     const prevCount = this.state.cart[code] ? this.state.cart[code].count : 0;
     const newCount = prevCount + 1;
+    const sum = item.price * newCount;
     this.setState({
       ...this.state,
-      cart: { ...this.state.cart, [code]: { item, count: newCount } },
+      cart: { ...this.state.cart, [code]: { item, count: newCount, sum } },
     });
   }
 }

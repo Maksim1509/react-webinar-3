@@ -38,7 +38,7 @@ function App({ store }) {
         />
       )}
       <PageLayout>
-        <Head title='Приложение на чистом JS' />
+        <Head title='Магазин' />
         <Summary cart={cart}>
           <Controls onModalOpen={callbacks.onModalOpen} />
         </Summary>

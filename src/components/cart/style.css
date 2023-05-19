@@ -25,20 +25,14 @@
 }
 
 .Cart-title {
-  font-family: 'Arial';
-  font-style: normal;
-  font-weight: 700;
   font-size: 32px;
   line-height: 37px;
-  color: #000000;
 }
 
 .Cart-btn {
   width: 76px;
   height: 21px;
-  background: #efefef;
-  border: 1px solid #767676;
-  border-radius: 2px;
+  cursor: pointer;
 }
 
 .Cart-content {
@@ -55,7 +49,6 @@
   font-weight: 700;
   font-size: 18px;
   line-height: 21px;
-  color: #000000;
 }
 
 .Cart-overlay {

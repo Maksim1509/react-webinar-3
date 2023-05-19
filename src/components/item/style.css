@@ -23,16 +23,20 @@
   padding: 20px 10px;
   font-size: 18px;
   line-height: 21px;
-  text-align: right;
+}
+
+.Item-count {
+  padding-left: 52px;
 }
 
 .Item-actions {
   display: flex;
   justify-content: flex-end;
-  padding: 20px 20px 20px 10px;
+  padding: 20px 20px 20px 14px;
 }
 
 .Item-btn {
   width: 76px;
   height: 22px;
+  cursor: pointer;
 }

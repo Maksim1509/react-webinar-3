@@ -12,35 +12,24 @@ import Cart from './components/cart';
  * @returns {React.ReactElement}
  */
 function App({ store }) {
-  const [modal, setModal] = useState(false);
-  const list = store.getState().list;
-  const cart = store.getState().cart;
+  const { list, cart, modal } = store.getState();
 
   const callbacks = {
-    onModalOpen: useCallback(() => setModal(true)),
-    onModalClose: useCallback(() => setModal(false)),
     onAddToCart: useCallback(
       (code) => {
         store.addToCart(code);
       },
       [store]
     ),
-    onDropFromCart: useCallback((code) => store.dropFromCart(code), [store]),
   };
 
   return (
     <>
-      {modal && (
-        <Cart
-          cart={cart}
-          onModalClose={callbacks.onModalClose}
-          onDropFromCart={callbacks.onDropFromCart}
-        />
-      )}
+      {modal && <Cart />}
       <PageLayout>
         <Head title='Магазин' />
         <Summary cart={cart}>
-          <Controls onModalOpen={callbacks.onModalOpen} />
+          <Controls />
         </Summary>
         <List
           list={list}

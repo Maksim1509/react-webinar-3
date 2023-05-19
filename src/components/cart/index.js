@@ -1,14 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useCallback } from 'react';
 import List from '../list';
+import { store } from '../../';
 import './style.css';
 
-function Cart(props) {
-  const items = Object.values(props.cart).map(({ item, count, sum }) => ({
+function Cart() {
+  const callbacks = {
+    onDropFromCart: useCallback((code) => store.dropFromCart(code), [store]),
+    onModalClose: useCallback(() => store.modalClose(), [store]),
+  };
+  const items = Object.values(store.state.cart).map(({ item, count, sum }) => ({
     ...item,
     count,
     sum,
   }));
+
   const sum = items.reduce((acc, { sum }) => acc + sum, 0);
   return (
     <>
@@ -16,7 +21,7 @@ function Cart(props) {
       <div className='Cart'>
         <div className='Cart-head'>
           <h2 className='Cart-title'>Корзина</h2>
-          <button className='Cart-btn' onClick={props.onModalClose}>
+          <button className='Cart-btn' onClick={callbacks.onModalClose}>
             Закрыть
           </button>
         </div>
@@ -26,7 +31,7 @@ function Cart(props) {
             <List
               list={items}
               bntName={'Удалить'}
-              onClick={props.onDropFromCart}
+              onClick={callbacks.onDropFromCart}
             />
             <div className='Cart-summary'>
               <span>Итого</span>
@@ -41,19 +46,4 @@ function Cart(props) {
   );
 }
 
-Cart.propTypes = {
-  cart: PropTypes.shape({
-    code: PropTypes.number,
-    price: PropTypes.number,
-    sum: PropTypes.number,
-  }).isRequired,
-  onModalClose: PropTypes.func,
-  onDropFromCart: PropTypes.func,
-};
-
-Cart.defaultProps = {
-  onDropFromCart: () => {},
-  onModalClose: () => {},
-};
-
-export default React.memo(Cart);
+export default Cart;

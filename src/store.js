@@ -5,7 +5,7 @@ import { generateCode } from './utils';
  */
 class Store {
   constructor(initState = {}) {
-    this.state = { ...initState, cart: {} };
+    this.state = { ...initState, cart: {}, modal: false };
     this.listeners = []; // Слушатели изменений состояния
   }
 
@@ -41,6 +41,26 @@ class Store {
   }
 
   /**
+   * Открытие модального окна
+   */
+  modalOpen() {
+    this.setState({
+      ...this.state,
+      modal: true,
+    });
+  }
+
+  /**
+   * Закрытие модального окна
+   */
+  modalClose() {
+    this.setState({
+      ...this.state,
+      modal: false,
+    });
+  }
+
+  /**
    * Добавление новой записи
    */
   addItem() {
@@ -67,6 +87,7 @@ class Store {
       cart: { ...this.state.cart, [code]: { item, count: newCount, sum } },
     });
   }
+
   /**
    * Удаление товара из корзины
    * @param code
@@ -78,6 +99,7 @@ class Store {
       ...this.state,
       cart: { ...copy },
     });
+    console.log(this.state);
   }
 }
 

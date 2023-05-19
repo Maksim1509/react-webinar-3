@@ -3,7 +3,8 @@
   flex-direction: column;
   position: absolute;
   width: 960px;
-  height: 407px;
+  min-height: 407px;
+  padding-bottom: 89px;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);

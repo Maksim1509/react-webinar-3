@@ -54,7 +54,7 @@ class Store {
   }
 
   /**
-   * Удаление записи по коду
+   * Добавление  товара в корзину
    * @param code
    */
   addToCart(code) {
@@ -65,6 +65,18 @@ class Store {
     this.setState({
       ...this.state,
       cart: { ...this.state.cart, [code]: { item, count: newCount, sum } },
+    });
+  }
+  /**
+   * Удаление товара из корзины
+   * @param code
+   */
+  dropFromCart(code) {
+    const copy = { ...this.state.cart };
+    delete copy[code];
+    this.setState({
+      ...this.state,
+      cart: { ...copy },
     });
   }
 }

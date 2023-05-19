@@ -6,8 +6,7 @@ import './style.css';
 function Summary(props) {
   const items = Object.values(props.cart);
   const sum = items.reduce((acc, { sum }) => acc + sum, 0);
-  const count = items.reduce((acc, { count }) => acc + count, 0);
-
+  const count = items.length;
   return (
     <div className={'Summary'}>
       <div className={'Summary-content'}>

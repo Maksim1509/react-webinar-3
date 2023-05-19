@@ -4,8 +4,8 @@ import './style.css';
 
 function Item(props) {
   const callbacks = {
-    onAddToCart: () => {
-      props.onAddToCart(props.item.code);
+    onClick: () => {
+      props.onClick(props.item.code);
     },
   };
   return (
@@ -13,9 +13,12 @@ function Item(props) {
       <div className='Item-code'>{props.item.code}</div>
       <div className='Item-title'>{props.item.title}</div>
       <div className='Item-price'>{props.item.price} ₽</div>
+      {props.item.count && (
+        <div className='Item-count'>{props.item.count} шт</div>
+      )}
       <div className='Item-actions'>
-        <button className='Item-btn' onClick={callbacks.onAddToCart}>
-          Добавить
+        <button className='Item-btn' onClick={callbacks.onClick}>
+          {props.bntName}
         </button>
       </div>
     </div>
@@ -23,16 +26,17 @@ function Item(props) {
 }
 
 Item.propTypes = {
+  name: PropTypes.string,
   item: PropTypes.shape({
     code: PropTypes.number,
     title: PropTypes.string,
     price: PropTypes.number,
   }).isRequired,
-  onAddToCart: PropTypes.func,
+  onClick: PropTypes.func,
 };
 
 Item.defaultProps = {
-  onAddToCart: () => {},
+  onClick: () => {},
 };
 
 export default React.memo(Item);

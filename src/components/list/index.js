@@ -8,7 +8,7 @@ function List(props) {
     <div className='List'>
       {props.list.map((item) => (
         <div key={item.code} className='List-item'>
-          <Item item={item} onAddToCart={props.onAddToCart} />
+          <Item item={item} bntName={props.bntName} onClick={props.onClick} />
         </div>
       ))}
     </div>
@@ -16,17 +16,18 @@ function List(props) {
 }
 
 List.propTypes = {
+  bntName: PropTypes.string,
   list: PropTypes.arrayOf(
     PropTypes.shape({
       code: PropTypes.number,
       price: PropTypes.number,
     })
   ).isRequired,
-  onAddToCart: PropTypes.func,
+  onClick: PropTypes.func,
 };
 
 List.defaultProps = {
-  onAddToCart: () => {},
+  onClick: () => {},
 };
 
 export default React.memo(List);

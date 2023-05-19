@@ -5,7 +5,7 @@ import './style.css';
 function Controls(props) {
   return (
     <div className='Controls'>
-      <button className='Controls-btn' onClick={() => console.log('Contoll')}>
+      <button className='Controls-btn' onClick={props.onModalOpen}>
         Перейти
       </button>
     </div>
@@ -13,11 +13,11 @@ function Controls(props) {
 }
 
 Controls.propTypes = {
-  onAdd: PropTypes.func,
+  onModalOpen: PropTypes.func,
 };
 
 Controls.defaultProps = {
-  onAdd: () => {},
+  onModalOpen: () => {},
 };
 
 export default React.memo(Controls);

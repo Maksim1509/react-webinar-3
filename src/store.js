@@ -99,7 +99,6 @@ class Store {
       ...this.state,
       cart: { ...copy },
     });
-    console.log(this.state);
   }
 }
 

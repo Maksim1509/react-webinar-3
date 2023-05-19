@@ -1,23 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { cn as bem } from '@bem-react/classname';
 import './style.css';
 
 function Item(props) {
+  const cn = bem('Item');
+
   const callbacks = {
     onClick: () => {
       props.onClick(props.item.code);
     },
   };
   return (
-    <div className={'Item'}>
-      <div className='Item-code'>{props.item.code}</div>
-      <div className='Item-title'>{props.item.title}</div>
-      <div className='Item-price'>{props.item.price} ₽</div>
+    <div className={cn()}>
+      <div className={cn('code')}>{props.item.code}</div>
+      <div className={cn('title')}>{props.item.title}</div>
+      <div className={cn('price')}>{props.item.price} ₽</div>
       {props.item.count && (
-        <div className='Item-count'>{props.item.count} шт</div>
+        <div className={cn('count')}>{props.item.count} шт</div>
       )}
-      <div className='Item-actions'>
-        <button className='Item-btn' onClick={callbacks.onClick}>
+      <div className={cn('actions')}>
+        <button className={cn('btn')} onClick={callbacks.onClick}>
           {props.bntName}
         </button>
       </div>

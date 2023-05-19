@@ -1,15 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { cn as bem } from '@bem-react/classname';
 import { plural } from '../../utils';
 import './style.css';
 
 function Summary(props) {
+  const cn = bem('Summary');
+
   const items = Object.values(props.cart);
   const sum = items.reduce((acc, { sum }) => acc + sum, 0);
   const count = items.length;
   return (
-    <div className={'Summary'}>
-      <div className={'Summary-content'}>
+    <div className={cn()}>
+      <div className={cn('content')}>
         В корзине:{' '}
         <b>
           {count
@@ -21,7 +24,7 @@ function Summary(props) {
             : 'пусто'}
         </b>
       </div>
-      <div className='Summary-actions'>{props.children}</div>
+      <div className={cn('actions')}>{props.children}</div>
     </div>
   );
 }
@@ -36,9 +39,5 @@ Summary.propTypes = {
     sum: PropTypes.number,
   }).isRequired,
 };
-
-// Item.defaultProps = {
-//   onAddToCart: () => {},
-// };
 
 export default React.memo(Summary);

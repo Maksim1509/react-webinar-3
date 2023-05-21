@@ -3,6 +3,7 @@ import { cn as bem } from '@bem-react/classname';
 import List from '../list';
 import { store } from '../../';
 import './style.css';
+import { numberFormat } from '../../utils';
 
 function Cart() {
   const cn = bem('Cart');
@@ -39,7 +40,7 @@ function Cart() {
             />
             <div className={cn('summary')}>
               <span>Итого</span>
-              <span>{sum} ₽</span>
+              <span>{numberFormat(sum)} ₽</span>
             </div>
           </>
         ) : (

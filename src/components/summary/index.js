@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { cn as bem } from '@bem-react/classname';
-import { plural } from '../../utils';
+import { numberFormat, plural } from '../../utils';
 import './style.css';
 
 function Summary(props) {
@@ -20,7 +20,7 @@ function Summary(props) {
                 one: 'товар',
                 few: 'товара',
                 many: 'товаров',
-              })} / ${sum} ₽`
+              })} / ${numberFormat(sum)} ₽`
             : 'пусто'}
         </b>
       </div>

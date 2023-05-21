@@ -13,14 +13,14 @@ import Item from './components/item';
  * @returns {React.ReactElement}
  */
 function App({ store }) {
-  const { list, cart, modal } = store.getState();
+  const { list, totalCount, totalPrice, modal } = store.getState();
 
   return (
     <>
       {modal && <Cart />}
       <PageLayout>
         <Head title='Магазин' />
-        <Summary cart={cart}>
+        <Summary totalCount={totalCount} totalPrice={totalPrice}>
           <Controls />
         </Summary>
         <List list={list}>{(props) => <Item item={{ ...props }} />}</List>

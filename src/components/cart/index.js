@@ -8,18 +8,12 @@ import CartItem from '../cart-item';
 
 function Cart() {
   const cn = bem('Cart');
-
+  const { totalCount, totalPrice, cart } = store.getState();
   const callbacks = {
-    onDropFromCart: useCallback((code) => store.dropFromCart(code), [store]),
     onModalClose: useCallback(() => store.modalClose(), [store]),
   };
-  const items = Object.values(store.state.cart).map(({ item, count, sum }) => ({
-    ...item,
-    count,
-    sum,
-  }));
 
-  const sum = items.reduce((acc, { sum }) => acc + sum, 0);
+  const items = Array.from(cart.values());
 
   return (
     <>
@@ -32,14 +26,14 @@ function Cart() {
           </button>
         </div>
 
-        {items.length ? (
+        {totalCount ? (
           <>
             <List list={items}>
               {(props) => <CartItem item={{ ...props }} />}
             </List>
             <div className={cn('summary')}>
               <span>Итого</span>
-              <span>{numberFormat(sum)} ₽</span>
+              <span>{numberFormat(totalPrice)} ₽</span>
             </div>
           </>
         ) : (

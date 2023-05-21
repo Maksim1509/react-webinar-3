@@ -10,8 +10,8 @@ function Item(props) {
 
   const callbacks = {
     onAddToCart: useCallback(
-      (code) => {
-        store.addToCart(code);
+      (item) => {
+        store.addToCart(item);
       },
       [store]
     ),
@@ -24,7 +24,7 @@ function Item(props) {
       <div className={cn('actions')}>
         <button
           className={cn('btn')}
-          onClick={() => callbacks.onAddToCart(props.item.code)}
+          onClick={() => callbacks.onAddToCart(props.item)}
         >
           Добавить
         </button>

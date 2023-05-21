@@ -15,18 +15,12 @@ function List(props) {
 }
 
 List.propTypes = {
-  bntName: PropTypes.string,
   list: PropTypes.arrayOf(
     PropTypes.shape({
       code: PropTypes.number,
       price: PropTypes.number,
     })
   ).isRequired,
-  onClick: PropTypes.func,
-};
-
-List.defaultProps = {
-  onClick: () => {},
 };
 
 export default React.memo(List);

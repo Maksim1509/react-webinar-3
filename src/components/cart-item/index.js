@@ -10,8 +10,8 @@ function CartItem(props) {
 
   const callbacks = {
     onDropFromCart: useCallback(
-      (code) => {
-        store.dropFromCart(code);
+      (item) => {
+        store.dropFromCart(item);
       },
       [store]
     ),
@@ -25,7 +25,7 @@ function CartItem(props) {
       <div className={cn('actions')}>
         <button
           className={cn('btn')}
-          onClick={() => callbacks.onDropFromCart(props.item.code)}
+          onClick={() => callbacks.onDropFromCart(props.item)}
         >
           Удалить
         </button>

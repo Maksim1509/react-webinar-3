@@ -5,7 +5,13 @@ import { generateCode } from './utils';
  */
 class Store {
   constructor(initState = {}) {
-    this.state = { ...initState, cart: {}, modal: false };
+    this.state = {
+      ...initState,
+      cart: new Map(),
+      modal: false,
+      totalCount: 0,
+      totalPrice: 0,
+    };
     this.listeners = []; // Слушатели изменений состояния
   }
 
@@ -77,14 +83,17 @@ class Store {
    * Добавление  товара в корзину
    * @param code
    */
-  addToCart(code) {
-    const item = this.state.list.find((item) => item.code === code);
-    const prevCount = this.state.cart[code] ? this.state.cart[code].count : 0;
-    const newCount = prevCount + 1;
-    const sum = item.price * newCount;
+  addToCart({ code, title, price }) {
+    const count = this.state.cart.has(code) || 0;
+    const newCount = count + 1;
+
+    const sum = price * newCount;
+    const newItem = { code, title, price, count: newCount, sum };
     this.setState({
       ...this.state,
-      cart: { ...this.state.cart, [code]: { item, count: newCount, sum } },
+      cart: this.state.cart.set(code, newItem),
+      totalCount: this.state.cart.size,
+      totalPrice: this.state.totalPrice + price,
     });
   }
 
@@ -92,12 +101,15 @@ class Store {
    * Удаление товара из корзины
    * @param code
    */
-  dropFromCart(code) {
-    const copy = { ...this.state.cart };
-    delete copy[code];
+  dropFromCart({ code, sum }) {
+    const newCart = new Map(this.state.cart);
+
+    newCart.delete(code);
     this.setState({
       ...this.state,
-      cart: { ...copy },
+      cart: newCart,
+      totalCount: newCart.size,
+      totalPrice: this.state.totalPrice - sum,
     });
   }
 }

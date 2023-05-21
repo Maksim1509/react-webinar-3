@@ -6,6 +6,7 @@ import PageLayout from './components/page-layout';
 import Summary from './components/summary';
 import Cart from './components/cart';
 import Item from './components/item';
+import Modal from './components/modal';
 
 /**
  * Приложение
@@ -17,7 +18,11 @@ function App({ store }) {
 
   return (
     <>
-      {modal && <Cart />}
+      {modal && (
+        <Modal title='Корзина'>
+          <Cart />
+        </Modal>
+      )}
       <PageLayout>
         <Head title='Магазин' />
         <Summary totalCount={totalCount} totalPrice={totalPrice}>

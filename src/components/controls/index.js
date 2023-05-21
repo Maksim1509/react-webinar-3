@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { store } from '../../';
+import { store } from '../..';
 import './style.css';
 
 function Controls() {

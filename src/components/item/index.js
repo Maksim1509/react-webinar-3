@@ -1,28 +1,32 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { cn as bem } from '@bem-react/classname';
 import './style.css';
 import { numberFormat } from '../../utils';
+import { store } from '../..';
 
 function Item(props) {
   const cn = bem('Item');
 
   const callbacks = {
-    onClick: () => {
-      props.onClick(props.item.code);
-    },
+    onAddToCart: useCallback(
+      (code) => {
+        store.addToCart(code);
+      },
+      [store]
+    ),
   };
   return (
     <div className={cn()}>
       <div className={cn('code')}>{props.item.code}</div>
       <div className={cn('title')}>{props.item.title}</div>
       <div className={cn('price')}>{numberFormat(props.item.price)} ₽</div>
-      {props.item.count && (
-        <div className={cn('count')}>{props.item.count} шт</div>
-      )}
       <div className={cn('actions')}>
-        <button className={cn('btn')} onClick={callbacks.onClick}>
-          {props.bntName}
+        <button
+          className={cn('btn')}
+          onClick={() => callbacks.onAddToCart(props.item.code)}
+        >
+          Добавить
         </button>
       </div>
     </div>
@@ -30,18 +34,11 @@ function Item(props) {
 }
 
 Item.propTypes = {
-  name: PropTypes.string,
   item: PropTypes.shape({
     code: PropTypes.number,
     title: PropTypes.string,
     price: PropTypes.number,
-    count: PropTypes.number,
   }).isRequired,
-  onClick: PropTypes.func,
-};
-
-Item.defaultProps = {
-  onClick: () => {},
 };
 
 export default React.memo(Item);

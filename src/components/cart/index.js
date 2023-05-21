@@ -4,6 +4,7 @@ import List from '../list';
 import { store } from '../../';
 import './style.css';
 import { numberFormat } from '../../utils';
+import CartItem from '../cart-item';
 
 function Cart() {
   const cn = bem('Cart');
@@ -33,11 +34,9 @@ function Cart() {
 
         {items.length ? (
           <>
-            <List
-              list={items}
-              bntName={'Удалить'}
-              onClick={callbacks.onDropFromCart}
-            />
+            <List list={items}>
+              {(props) => <CartItem item={{ ...props }} />}
+            </List>
             <div className={cn('summary')}>
               <span>Итого</span>
               <span>{numberFormat(sum)} ₽</span>

@@ -5,6 +5,7 @@ import Head from './components/head';
 import PageLayout from './components/page-layout';
 import Summary from './components/summary';
 import Cart from './components/cart';
+import Item from './components/item';
 
 /**
  * Приложение
@@ -14,15 +15,6 @@ import Cart from './components/cart';
 function App({ store }) {
   const { list, cart, modal } = store.getState();
 
-  const callbacks = {
-    onAddToCart: useCallback(
-      (code) => {
-        store.addToCart(code);
-      },
-      [store]
-    ),
-  };
-
   return (
     <>
       {modal && <Cart />}
@@ -31,11 +23,7 @@ function App({ store }) {
         <Summary cart={cart}>
           <Controls />
         </Summary>
-        <List
-          list={list}
-          bntName={'Добавить'}
-          onClick={callbacks.onAddToCart}
-        />
+        <List list={list}>{(props) => <Item item={{ ...props }} />}</List>
       </PageLayout>
     </>
   );

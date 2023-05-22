@@ -84,11 +84,11 @@ class Store {
    * @param code
    */
   addToCart({ code, title, price }) {
-    const count = this.state.cart.has(code) || 0;
-    const newCount = count + 1;
+    const item = this.state.cart.get(code);
+    const count = item ? item.count + 1 : 1;
 
-    const sum = price * newCount;
-    const newItem = { code, title, price, count: newCount, sum };
+    const sum = price * count;
+    const newItem = { code, title, price, count, sum };
     this.setState({
       ...this.state,
       cart: this.state.cart.set(code, newItem),
@@ -103,7 +103,6 @@ class Store {
    */
   dropFromCart({ code, sum }) {
     const newCart = new Map(this.state.cart);
-
     newCart.delete(code);
     this.setState({
       ...this.state,

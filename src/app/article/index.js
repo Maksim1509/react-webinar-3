@@ -6,6 +6,8 @@ import BasketTool from '../../components/basket-tool';
 import useStore from '../../store/use-store';
 import useSelector from '../../store/use-selector';
 import ArticleInfo from '../../components/article-info';
+import Nav from '../../components/nav';
+import './style.css';
 
 function Article() {
   const store = useStore();
@@ -51,11 +53,14 @@ function Article() {
   return (
     <PageLayout>
       <Head title={item && item.title} />
-      <BasketTool
-        onOpen={callbacks.openModalBasket}
-        amount={select.amount}
-        sum={select.sum}
-      />
+      <div className='Article-controls'>
+        <Nav />
+        <BasketTool
+          onOpen={callbacks.openModalBasket}
+          amount={select.amount}
+          sum={select.sum}
+        />
+      </div>
       {item && (
         <ArticleInfo article={{ ...item }} onAdd={callbacks.addToBasket} />
       )}

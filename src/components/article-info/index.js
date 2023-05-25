@@ -16,8 +16,10 @@ function ArticleInfo(props) {
     <div className={cn()}>
       <div className={cn('description')}>{props.article.description}</div>
       <div className={cn('madeIn')}>
-        Страна производитель: <b>{props.article.madeIn.title}</b> (
-        {props.article.madeIn.code})
+        Страна производитель:{' '}
+        <b>
+          {props.article.madeIn.title} ({props.article.madeIn.code})
+        </b>
       </div>
       <div className={cn('category')}>
         Категория: <b>{props.article.category.title}</b>

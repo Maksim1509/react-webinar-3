@@ -1,9 +1,7 @@
-import { memo, useCallback, useState } from 'react';
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 import { cn as bem } from '@bem-react/classname';
-import { numberFormat } from '../../utils';
 import './style.css';
-import { useNavigate } from 'react-router-dom';
 
 function ArticleInfo(props) {
   const cn = bem('ArticleInfo');
@@ -27,9 +25,13 @@ function ArticleInfo(props) {
       <div className={cn('edition')}>
         Год выпуска: <b>{props.article.edition}</b>
       </div>
-      <div className={cn('price')}>Цена: {props.article.price} ₽: </div>
-      <div className={cn('btn')}></div>
-      <button onClick={callbacks.onAdd}>Добавить</button>
+      <div className={cn('price')}>
+        Цена: <b>{props.article.price} ₽</b>
+      </div>
+
+      <div className={cn('btn')}>
+        <button onClick={callbacks.onAdd}>Добавить</button>
+      </div>
     </div>
   );
 }

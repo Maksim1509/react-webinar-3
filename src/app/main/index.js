@@ -9,8 +9,12 @@ import useSelector from '../../store/use-selector';
 import Nav from '../../components/nav';
 import './style.css';
 import Pagination from '../../components/pagination';
+import { messages } from '../../store/lang/messages';
+import Lang from '../../components/lang';
+import useTranslate from '../../store/use-translate';
 
 function Main() {
+  const t = useTranslate();
   const store = useStore();
 
   const select = useSelector((state) => ({
@@ -40,6 +44,10 @@ function Main() {
       (activePage) => store.actions.catalog.changePage(activePage),
       [store]
     ),
+    changeLang: useCallback(
+      (lang) => store.actions.lang.changeLang(lang),
+      [store]
+    ),
   };
 
   const renders = {
@@ -53,9 +61,10 @@ function Main() {
 
   return (
     <PageLayout>
-      <Head title='Магазин' />
+      <Head title={messages[t].store} />
       <div className='main-controls'>
         <Nav />
+        <Lang onChangeLang={callbacks.changeLang} />
         <BasketTool
           onOpen={callbacks.openModalBasket}
           amount={select.amount}

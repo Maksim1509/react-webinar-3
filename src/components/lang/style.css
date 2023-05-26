@@ -1,0 +1,16 @@
+.Lang {
+  height: 40px;
+  padding: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.Lang-btn {
+  cursor: pointer;
+}
+
+.Lang-btn_active {
+  background-color: #0087e9;
+}

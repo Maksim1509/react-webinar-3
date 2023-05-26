@@ -13,15 +13,17 @@ import Pagination from '../../components/pagination';
 function Main() {
   const store = useStore();
 
-  useEffect(() => {
-    store.actions.catalog.load();
-  }, []);
-
   const select = useSelector((state) => ({
     list: state.catalog.list,
+    pagesCount: state.catalog.pagesCount,
+    activePage: state.catalog.activePage,
     amount: state.basket.amount,
     sum: state.basket.sum,
   }));
+
+  useEffect(() => {
+    store.actions.catalog.load(1);
+  }, []);
 
   const callbacks = {
     // Добавление в корзину
@@ -32,6 +34,10 @@ function Main() {
     // Открытие модалки корзины
     openModalBasket: useCallback(
       () => store.actions.modals.open('basket'),
+      [store]
+    ),
+    changePage: useCallback(
+      (activePage) => store.actions.catalog.changePage(activePage),
       [store]
     ),
   };
@@ -57,7 +63,11 @@ function Main() {
         />
       </div>
       <List list={select.list} renderItem={renders.item} />
-      <Pagination />
+      <Pagination
+        onChangePage={callbacks.changePage}
+        pagesCount={select.pagesCount}
+        activePage={select.activePage}
+      />
     </PageLayout>
   );
 }

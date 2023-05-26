@@ -1,18 +1,38 @@
 import { cn as bem } from '@bem-react/classname';
+import PropTypes from 'prop-types';
+import { memo } from 'react';
+import { getPaginationItems } from '../../utils';
 import './style.css';
 
-function Pagination() {
+function Pagination(props) {
   const cn = bem('Pagination');
-  return (
-    <div className={cn()}>
-      <a className={cn('link', { active: true })}>1</a>
-      <a className={cn('link')}>2</a>
-      <a className={cn('link')}>3</a>
-      <a className={cn('link')}>4</a>
-      <a className={cn('points')}>...</a>
-      <a className={cn('link')}>5</a>
-    </div>
+
+  const renderPaginationItems = getPaginationItems(
+    props.activePage,
+    props.pagesCount
+  ).map((item, i) =>
+    item === 'points' ? (
+      <a key={i} className={cn('points')}>
+        ...
+      </a>
+    ) : (
+      <a
+        key={i}
+        onClick={() => props.onChangePage(item)}
+        className={cn('link', { active: props.activePage === item })}
+      >
+        {item}
+      </a>
+    )
   );
+
+  return <div className={cn()}>{renderPaginationItems}</div>;
 }
 
-export default Pagination;
+Pagination.propTypes = {
+  pagesCount: PropTypes.number,
+  activePage: PropTypes.number.isRequired,
+  onChangePage: PropTypes.func.isRequired,
+};
+
+export default memo(Pagination);

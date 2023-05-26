@@ -18,12 +18,16 @@ function Item(props) {
   };
 
   return (
-    <div
-      className={cn()}
-      onClick={() => callbacks.onOpenArticle(props.item._id)}
-    >
+    <div className={cn()}>
       {/*<div className={cn('code')}>{props.item._id}</div>*/}
-      <div className={cn('title')}>{props.item.title}</div>
+      <div className={cn('title')}>
+        <a
+          className={cn('link')}
+          onClick={() => callbacks.onOpenArticle(props.item._id)}
+        >
+          {props.item.title}
+        </a>
+      </div>
       <div className={cn('actions')}>
         <div className={cn('price')}>{numberFormat(props.item.price)} ₽</div>
         <button onClick={callbacks.onAdd}>Добавить</button>

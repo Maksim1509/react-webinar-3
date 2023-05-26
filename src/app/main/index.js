@@ -8,6 +8,7 @@ import useStore from '../../store/use-store';
 import useSelector from '../../store/use-selector';
 import Nav from '../../components/nav';
 import './style.css';
+import Pagination from '../../components/pagination';
 
 function Main() {
   const store = useStore();
@@ -56,6 +57,7 @@ function Main() {
         />
       </div>
       <List list={select.list} renderItem={renders.item} />
+      <Pagination />
     </PageLayout>
   );
 }

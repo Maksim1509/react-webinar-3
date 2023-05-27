@@ -5,7 +5,6 @@ import { numberFormat } from '../../utils';
 import './style.css';
 import { useNavigate } from 'react-router-dom';
 import useTranslate from '../../store/use-translate';
-import { messages } from '../../store/lang/messages';
 
 function Item(props) {
   const t = useTranslate();
@@ -33,7 +32,7 @@ function Item(props) {
       </div>
       <div className={cn('actions')}>
         <div className={cn('price')}>{numberFormat(props.item.price)} ₽</div>
-        <button onClick={callbacks.onAdd}>{messages[t].add}</button>
+        <button onClick={callbacks.onAdd}>{t('add')}</button>
       </div>
     </div>
   );

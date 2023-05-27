@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { cn as bem } from '@bem-react/classname';
 import useTranslate from '../../store/use-translate';
 import './style.css';
-import { messages } from '../../store/lang/messages';
 
 function ArticleInfo(props) {
   const cn = bem('ArticleInfo');
@@ -16,23 +15,23 @@ function ArticleInfo(props) {
     <div className={cn()}>
       <div className={cn('description')}>{props.article.description}</div>
       <div className={cn('madeIn')}>
-        {messages[t].made}:{' '}
+        {t('made')}:{' '}
         <b>
           {props.article.madeIn.title} ({props.article.madeIn.code})
         </b>
       </div>
       <div className={cn('category')}>
-        {messages[t].category}: <b>{props.article.category.title}</b>
+        {t('category')}: <b>{props.article.category.title}</b>
       </div>
       <div className={cn('edition')}>
-        {messages[t].edition}: <b>{props.article.edition}</b>
+        {t('edition')}: <b>{props.article.edition}</b>
       </div>
       <div className={cn('price')}>
-        {messages[t].price}: <b>{props.article.price} ₽</b>
+        {t('price')}: <b>{props.article.price} ₽</b>
       </div>
 
       <div className={cn('btn')}>
-        <button onClick={callbacks.onAdd}>{messages[t].add}</button>
+        <button onClick={callbacks.onAdd}>{t('add')}</button>
       </div>
     </div>
   );

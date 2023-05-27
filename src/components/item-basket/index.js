@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import './style.css';
 import useTranslate from '../../store/use-translate';
-import { messages } from '../../store/lang/messages';
 
 function ItemBasket(props) {
   const navigate = useNavigate();
@@ -35,10 +34,10 @@ function ItemBasket(props) {
       <div className={cn('right')}>
         <div className={cn('cell')}>{numberFormat(props.item.price)} ₽</div>
         <div className={cn('cell')}>
-          {numberFormat(props.item.amount || 0)} {messages[t].ptc}
+          {numberFormat(props.item.amount || 0)} {t('ptc')}
         </div>
         <div className={cn('cell')}>
-          <button onClick={callbacks.onRemove}>{messages[t].del}</button>
+          <button onClick={callbacks.onRemove}>{t('del')}</button>
         </div>
       </div>
     </div>

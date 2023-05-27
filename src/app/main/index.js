@@ -9,7 +9,6 @@ import useSelector from '../../store/use-selector';
 import Nav from '../../components/nav';
 import './style.css';
 import Pagination from '../../components/pagination';
-import { messages } from '../../store/lang/messages';
 import Lang from '../../components/lang';
 import useTranslate from '../../store/use-translate';
 
@@ -26,7 +25,7 @@ function Main() {
   }));
 
   useEffect(() => {
-    store.actions.catalog.load(1);
+    store.actions.catalog.load(select.activePage);
   }, []);
 
   const callbacks = {
@@ -61,7 +60,7 @@ function Main() {
 
   return (
     <PageLayout>
-      <Head title={messages[t].store} />
+      <Head title={t('store')} />
       <div className='main-controls'>
         <Nav />
         <Lang onChangeLang={callbacks.changeLang} />

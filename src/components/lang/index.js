@@ -10,13 +10,13 @@ function Lang(props) {
   return (
     <div className={cn()}>
       <button
-        className={cn('btn', { active: t === 'ru-RU' })}
+        className={cn('btn', { active: t('getLocale', true) === 'ru-RU' })}
         onClick={() => props.onChangeLang('ru-RU')}
       >
         Ru
       </button>
       <button
-        className={cn('btn', { active: t === 'en-EN' })}
+        className={cn('btn', { active: t('getLocale', true) === 'en-EN' })}
         onClick={() => props.onChangeLang('en-EN')}
       >
         Eng

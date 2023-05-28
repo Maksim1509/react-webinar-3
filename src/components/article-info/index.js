@@ -10,7 +10,6 @@ function ArticleInfo(props) {
   const callbacks = {
     onAdd: (e) => props.onAdd(props.article._id),
   };
-
   return (
     <div className={cn()}>
       <div className={cn('description')}>{props.article.description}</div>

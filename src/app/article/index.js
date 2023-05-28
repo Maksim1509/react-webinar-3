@@ -13,18 +13,23 @@ function Article() {
   const store = useStore();
   const params = useParams();
   const [item, setItem] = useState(null);
+  const [loading, setLoading] = useState(true);
   const _id = params._id;
 
   useEffect(() => {
-    async function fetchData() {
+    function fetchData() {
       try {
-        const response = await fetch(
+        setLoading(true);
+        fetch(
           `/api/v1/articles/${_id}?fields=*,madeIn(title,code),category(title)`
-        );
-        const json = await response.json();
-
-        setItem(json.result);
+        )
+          .then((res) => res.json())
+          .then((json) => {
+            setItem(json.result);
+            setLoading(false);
+          });
       } catch (e) {
+        setLoading(false);
         alert(e.message);
       }
     }
@@ -61,7 +66,9 @@ function Article() {
           sum={select.sum}
         />
       </div>
-      {item && (
+      {loading ? (
+        <p className='Article-loading'>Loading...</p>
+      ) : (
         <ArticleInfo article={{ ...item }} onAdd={callbacks.addToBasket} />
       )}
     </PageLayout>

@@ -9,3 +9,34 @@
 .Article-controls button {
   width: 80px;
 }
+
+.Article-loading {
+  position: absolute;
+  font-size: 32px;
+  font-weight: bold;
+  top: 200px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@keyframes spinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.Article-loading::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 105%;
+  width: 30px;
+  height: 30px;
+  border: 6px solid yellow;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: 1s linear infinite spinner;
+}

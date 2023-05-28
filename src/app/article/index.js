@@ -13,9 +13,9 @@ function Article() {
   const store = useStore();
   const params = useParams();
   const [item, setItem] = useState(null);
+  const _id = params._id;
 
   useEffect(() => {
-    const _id = params._id;
     async function fetchData() {
       try {
         const response = await fetch(
@@ -29,7 +29,7 @@ function Article() {
       }
     }
     fetchData();
-  }, []);
+  }, [_id]);
 
   const select = useSelector((state) => ({
     list: state.catalog.list,

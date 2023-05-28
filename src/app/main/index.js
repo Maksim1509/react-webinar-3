@@ -2,12 +2,12 @@ import { memo, useCallback, useEffect } from 'react';
 import Item from '../../components/item';
 import PageLayout from '../../components/page-layout';
 import Head from '../../components/head';
+import ContainerSpaceBetween from '../../components/container-space-between';
 import BasketTool from '../../components/basket-tool';
 import List from '../../components/list';
 import useStore from '../../store/use-store';
 import useSelector from '../../store/use-selector';
 import Nav from '../../components/nav';
-import './style.css';
 import Pagination from '../../components/pagination';
 import Lang from '../../components/lang';
 import useTranslate from '../../store/use-translate';
@@ -61,7 +61,7 @@ function Main() {
   return (
     <PageLayout>
       <Head title={t('store')} />
-      <div className='main-controls'>
+      <ContainerSpaceBetween>
         <Nav />
         <Lang onChangeLang={callbacks.changeLang} />
         <BasketTool
@@ -69,7 +69,7 @@ function Main() {
           amount={select.amount}
           sum={select.sum}
         />
-      </div>
+      </ContainerSpaceBetween>
       <List list={select.list} renderItem={renders.item} />
       <Pagination
         onChangePage={callbacks.changePage}

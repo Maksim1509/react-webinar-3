@@ -5,7 +5,7 @@ import { numberFormat, plural } from '../../utils';
 import './style.css';
 import useTranslate from '../../store/use-translate';
 
-function BasketTool({ sum, amount, onOpen }) {
+function BasketTool({ sum, amount, onOpen, btn }) {
   const t = useTranslate();
   const cn = bem('BasketTool');
   return (
@@ -25,7 +25,9 @@ function BasketTool({ sum, amount, onOpen }) {
             )} / ${numberFormat(sum)} ₽`
           : `${t('empty')}`}
       </span>
-      <button onClick={onOpen}>{t('go')}</button>
+      <button className={cn('btn', { [btn]: true })} onClick={onOpen}>
+        {t('go')}
+      </button>
     </div>
   );
 }
@@ -34,6 +36,7 @@ BasketTool.propTypes = {
   onOpen: PropTypes.func.isRequired,
   sum: PropTypes.number,
   amount: PropTypes.number,
+  btn: PropTypes.string,
 };
 
 BasketTool.defaultProps = {

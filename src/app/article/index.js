@@ -7,7 +7,8 @@ import useStore from '../../store/use-store';
 import useSelector from '../../store/use-selector';
 import ArticleInfo from '../../components/article-info';
 import Nav from '../../components/nav';
-import './style.css';
+import ContainerSpaceBetween from '../../components/container-space-between';
+import Spinner from '../../components/spinner';
 
 function Article() {
   const store = useStore();
@@ -45,16 +46,17 @@ function Article() {
   return (
     <PageLayout>
       <Head title={!loading && select.article.title} />
-      <div className='Article-controls'>
+      <ContainerSpaceBetween>
         <Nav />
         <BasketTool
           onOpen={callbacks.openModalBasket}
           amount={select.amount}
           sum={select.sum}
+          btn='large'
         />
-      </div>
+      </ContainerSpaceBetween>
       {loading ? (
-        <p className='Article-loading'>Loading...</p>
+        <Spinner />
       ) : (
         <ArticleInfo
           article={{ ...select.article }}

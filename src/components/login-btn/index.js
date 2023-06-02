@@ -9,18 +9,18 @@ function LoginBtn(props) {
 
   return (
     <Link to={props.link} className={cn()}>
-      <button className={cn('btn')}>{props.labelLogin}</button>
+      <button className={cn('btn')}>{props.btnLogin}</button>
     </Link>
   );
 }
 
 LoginBtn.propTypes = {
   link: PropTypes.string.isRequired,
-  labelLogin: PropTypes.string,
+  btnLogin: PropTypes.string,
 };
 
 LoginBtn.defaultProps = {
-  labelLogin: 'Войти',
+  btnLogin: 'Войти',
 };
 
 export default memo(LoginBtn);

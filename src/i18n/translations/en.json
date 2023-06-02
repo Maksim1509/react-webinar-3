@@ -15,5 +15,11 @@
     "one": "article",
     "other": "articles"
   },
-  "labelLogin": "Login"
+  "btnLogin": "Login",
+  "btnLogout": "Log out",
+  "loginLabel": "Login",
+  "passwordLabel": "Password",
+  "profileTitle": "Profile",
+  "profileName": "Name",
+  "phone": "Phone"
 }

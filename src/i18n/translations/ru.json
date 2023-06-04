@@ -17,9 +17,9 @@
     "many": "товаров",
     "other": "товара"
   },
-  "btnLogin": "Войти",
+  "btnLogin": "Вход",
   "loginLabel": "Логин",
-  "btnLogout": "Выйти",
+  "btnLogout": "Выход",
   "passwordLabel": "Пароль",
   "profileTitle": "Профиль",
   "profileName": "Имя",

@@ -9,7 +9,7 @@ function LoginBtn(props) {
 
   return (
     <Link to={props.link} className={cn()}>
-      <button className={cn('btn')}>{props.btnLogin}</button>
+      {props.btnLogin}
     </Link>
   );
 }

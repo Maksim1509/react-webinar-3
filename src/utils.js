@@ -34,17 +34,30 @@ export function numberFormat(value, locale = 'ru-RU', options = {}) {
   return new Intl.NumberFormat(locale, options).format(value);
 }
 
+/**
+ * Парсинг списка категорий
+ * @param coll []
+ * @returns []
+ */
 export function parseCategories(coll) {
-  const parsed = coll.slice();
+  const parsed = coll.slice(); // создаём копию колекции
+  // группируем категории
   parsed.forEach((item) => {
     if (!item.parent) return;
+    // ищем родительскую категорию и добавляем в ее children[] текущий item
     const parent = parsed.find((i) => i._id === item.parent._id);
     if (parent)
       parent.children ? parent.children.push(item) : (parent.children = [item]);
   });
+
   return formatter(parsed.filter((i) => !i.parent));
 }
 
+/**
+ * Форматирование дерева категорий
+ * @param tree []
+ * @returns []
+ */
 function formatter(tree) {
   const res = [{ value: '', title: 'Все', dashes: 0 }];
   const iter = (children, depth) => {

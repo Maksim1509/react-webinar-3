@@ -1,5 +1,6 @@
 .ProfileCard {
-  padding: 20px 40px;
+  margin-top: 18px;
+  padding: 20px;
 }
 
 .ProfileCard-prop {
@@ -9,8 +10,13 @@
   font-size: 18px;
 }
 
+.ProfileCard-title {
+  margin: 0;
+  margin-bottom: 30px;
+}
+
 .ProfileCard-label {
-  padding-right: 10px;
+  padding-right: 5px;
 }
 
 .ProfileCard-value {

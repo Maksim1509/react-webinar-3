@@ -10,6 +10,7 @@ class AuthState extends StoreModule {
       token: localStorage.getItem('USER_TOKEN') || null,
       username: localStorage.getItem('USER_NAME') || null,
       waiting: false,
+      error: '',
     };
   }
 
@@ -25,6 +26,7 @@ class AuthState extends StoreModule {
       token: null,
       username: null,
       waiting: true,
+      error: '',
     });
 
     try {
@@ -35,27 +37,29 @@ class AuthState extends StoreModule {
         },
         body: JSON.stringify(data),
       });
-      const { result } = await response.json();
-
-      localStorage.setItem('USER_TOKEN', result.token);
-      localStorage.setItem('USER_NAME', result.user.profile.name);
+      const json = await response.json();
+      if (json.error) throw json.error;
+      localStorage.setItem('USER_TOKEN', json.result.token);
+      localStorage.setItem('USER_NAME', json.result.user.profile.name);
 
       // Пользователь Авторизован
       this.setState(
         {
           isAuth: true,
-          token: result.token,
-          username: result.user.profile.name,
+          token: json.result.token,
+          username: json.result.user.profile.name,
           waiting: false,
+          error: '',
         },
         'Пользователь Авторизован'
       );
     } catch (e) {
-      // Ошибка при загрузке
-      // @todo В стейт можно положить информацию об ошибке
       this.setState({
         isAuth: false,
+        token: null,
+        username: null,
         waiting: false,
+        error: e.message,
       });
     }
   }

@@ -15,3 +15,12 @@
   width: 53px;
   height: 21px;
 }
+
+.Form-error {
+  align-self: flex-start;
+  margin: 0;
+  font-size: 16px;
+  line-height: 18px;
+  text-align: center;
+  color: #ff0000;
+}

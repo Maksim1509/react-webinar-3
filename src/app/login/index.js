@@ -19,6 +19,7 @@ function Login() {
   const select = useSelector((state) => ({
     isAuth: state.user.isAuth,
     waiting: state.user.waiting,
+    error: state.user.error,
   }));
 
   useInit(() => {
@@ -29,7 +30,7 @@ function Login() {
     onSubmit: (data) => store.actions.user.auth(data),
   };
   const { t } = useTranslate();
-
+  console.log(select.waiting);
   return (
     <PageLayout head={<Header />}>
       <Head title={t('title')}>
@@ -43,6 +44,7 @@ function Login() {
           loginLabel={t('loginLabel')}
           passwordLabel={t('passwordLabel')}
           btnLogin={t('btnLogin')}
+          error={select.error}
         />
       </Spinner>
     </PageLayout>

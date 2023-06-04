@@ -55,7 +55,7 @@ function Form(props) {
             onChange={onPasswordChange}
           />
         </label>
-
+        {props.error && <span className={cn('error')}>{props.error}</span>}
         <button className={cn('btn')} type='submit'>
           {props.btnLogin}
         </button>
@@ -68,6 +68,7 @@ Form.propTypes = {
   loginLabel: PropTypes.string,
   passwordLabel: PropTypes.string,
   btnLogin: PropTypes.string,
+  error: PropTypes.string,
   onSubmit: PropTypes.func,
 };
 
@@ -75,6 +76,7 @@ Form.defaultProps = {
   loginLabel: 'Логин',
   passwordLabel: 'Пароль',
   btnLogin: 'Войти',
+  error: '',
   onSubmit: () => {},
 };
 

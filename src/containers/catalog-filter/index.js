@@ -57,16 +57,19 @@ function CatalogFilter() {
   return (
     <SideLayout padding='medium'>
       <Select
+        type={'category'}
         options={select.categoriesOptions}
         value={select.category}
         onChange={callbacks.onCategoryChange}
       />
       <Select
+        type={'sort'}
         options={options.sort}
         value={select.sort}
         onChange={callbacks.onSort}
       />
       <Input
+        theme={'big'}
         value={select.query}
         onChange={callbacks.onSearch}
         placeholder={'Поиск'}

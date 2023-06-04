@@ -43,7 +43,7 @@ function Login() {
           title={t('loginTitle')}
           loginLabel={t('loginLabel')}
           passwordLabel={t('passwordLabel')}
-          btnLogin={t('btnLogin')}
+          btnLogin={t('formBtnSubmit')}
           error={select.error}
         />
       </Spinner>

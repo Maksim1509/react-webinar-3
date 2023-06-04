@@ -18,6 +18,7 @@
     "other": "товара"
   },
   "btnLogin": "Вход",
+  "formBtnSubmit": "Войти",
   "loginLabel": "Логин",
   "btnLogout": "Выход",
   "passwordLabel": "Пароль",

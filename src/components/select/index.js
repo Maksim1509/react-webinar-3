@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { cn as bem } from '@bem-react/classname';
 import PropTypes from 'prop-types';
 import './style.css';
 
@@ -7,8 +8,14 @@ function Select(props) {
     props.onChange(e.target.value);
   };
 
+  const cn = bem('Select');
+
   return (
-    <select className='Select' value={props.value} onChange={onSelect}>
+    <select
+      className={cn({ [props.type]: true })}
+      value={props.value}
+      onChange={onSelect}
+    >
       {props.options.map((item) => (
         <option key={item.value} value={item.value}>
           {'- '.repeat(item.dashes)}

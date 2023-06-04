@@ -39,6 +39,7 @@ function Login() {
       <Spinner active={select.waiting}>
         <Form
           onSubmit={callbacks.onSubmit}
+          title={t('loginTitle')}
           loginLabel={t('loginLabel')}
           passwordLabel={t('passwordLabel')}
           btnLogin={t('btnLogin')}

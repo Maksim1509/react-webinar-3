@@ -23,5 +23,6 @@
   "passwordLabel": "Пароль",
   "profileTitle": "Профиль",
   "profileName": "Имя",
-  "phone": "Телефон"
+  "phone": "Телефон",
+  "loginTitle": "Вход"
 }

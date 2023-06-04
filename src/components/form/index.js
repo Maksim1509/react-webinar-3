@@ -29,33 +29,38 @@ function Form(props) {
 
   const cn = bem('Form');
   return (
-    <form className={cn()} onSubmit={callbacks.onSubmit}>
-      <label className={cn('label')} htmlFor='login'>
-        {props.loginLabel}
-      </label>
-      <input
-        className={cn('input')}
-        value={loginValue}
-        type='text'
-        name='login'
-        required
-        onChange={onLoginChange}
-      />
-      <label className={cn('label')} htmlFor='password'>
-        {props.passwordLabel}
-      </label>
-      <input
-        className={cn('input')}
-        value={passwordValue}
-        type='password'
-        name='password'
-        required
-        onChange={onPasswordChange}
-      />
-      <button className={cn('btn')} type='submit'>
-        {props.btnLogin}
-      </button>
-    </form>
+    <>
+      <h2 className={cn('title')}>{props.title}</h2>
+      <form className={cn()} onSubmit={callbacks.onSubmit}>
+        <label className={cn('label')}>
+          {props.loginLabel}
+          <input
+            className={cn('input')}
+            value={loginValue}
+            type='text'
+            name='login'
+            required
+            onChange={onLoginChange}
+          />
+        </label>
+
+        <label className={cn('label')}>
+          {props.passwordLabel}
+          <input
+            className={cn('input')}
+            value={passwordValue}
+            type='password'
+            name='password'
+            required
+            onChange={onPasswordChange}
+          />
+        </label>
+
+        <button className={cn('btn')} type='submit'>
+          {props.btnLogin}
+        </button>
+      </form>
+    </>
   );
 }
 

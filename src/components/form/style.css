@@ -1,8 +1,17 @@
-.Input{
-  font-size: 16px;
-  padding: 2px;
+.Form {
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+  max-width: 203px;
+  row-gap: 19px;
 }
 
-.Input_theme_big{
-  width: 300px;
+.Form-title {
+  margin: 62px 0 36px;
+  padding-left: 20px;
+}
+
+.Form-btn {
+  width: 53px;
+  height: 21px;
 }

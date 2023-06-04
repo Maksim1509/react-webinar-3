@@ -21,5 +21,6 @@
   "passwordLabel": "Password",
   "profileTitle": "Profile",
   "profileName": "Name",
-  "phone": "Phone"
+  "phone": "Phone",
+  "loginTitle": "Login"
 }

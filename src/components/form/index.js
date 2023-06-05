@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { cn as bem } from '@bem-react/classname';
 
@@ -11,9 +11,11 @@ function Form(props) {
 
   // Обработчики изменения значений формы
   const onLoginChange = (event) => {
+    props.setError('');
     setLoginValue(event.target.value);
   };
   const onPasswordChange = (event) => {
+    props.setError('');
     setPasswordValue(event.target.value);
   };
 
@@ -26,6 +28,10 @@ function Form(props) {
       });
     },
   };
+
+  useEffect(() => {
+    props.setError('');
+  }, []);
 
   const cn = bem('Form');
   return (
@@ -70,6 +76,7 @@ Form.propTypes = {
   btnLogin: PropTypes.string,
   error: PropTypes.string,
   onSubmit: PropTypes.func,
+  setError: PropTypes.func,
 };
 
 Form.defaultProps = {
@@ -78,6 +85,7 @@ Form.defaultProps = {
   btnLogin: 'Войти',
   error: '',
   onSubmit: () => {},
+  setError: () => {},
 };
 
 export default memo(Form);

@@ -1,4 +1,3 @@
-import { parseCategories } from '../../utils';
 import StoreModule from '../module';
 
 /**
@@ -19,7 +18,6 @@ class CatalogState extends StoreModule {
         query: '',
         category: '',
       },
-      categoriesList: [],
       count: 0,
       waiting: false,
     };
@@ -58,24 +56,6 @@ class CatalogState extends StoreModule {
     const params = { ...this.initState().params, ...newParams };
     // Установка параметров и загрузка данных
     await this.setParams(params);
-  }
-
-  async loadCategories() {
-    try {
-      const response = await fetch(
-        '/api/v1/categories?fields=_id,title,parent(_id)&limit=*'
-      );
-      const { result } = await response.json();
-      console.log(result);
-      console.log(parseCategories(result.items));
-      const categoriesList = parseCategories(result.items);
-      this.setState({
-        ...this.getState(),
-        categoriesList,
-      });
-    } catch (error) {
-      console.log(error);
-    }
   }
 
   /**

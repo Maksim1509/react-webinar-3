@@ -6,12 +6,60 @@ import StoreModule from '../module';
 class AuthState extends StoreModule {
   initState() {
     return {
-      isAuth: localStorage.getItem('USER_TOKEN') ? true : false,
-      token: localStorage.getItem('USER_TOKEN') || null,
-      username: localStorage.getItem('USER_NAME') || null,
+      isAuth: false,
+      username: null,
       waiting: false,
       error: '',
     };
+  }
+
+  setError(message) {
+    this.setState({
+      isAuth: false,
+      username: null,
+      waiting: false,
+      error: message,
+    });
+  }
+
+  async auth() {
+    const token = localStorage.getItem('USER_TOKEN');
+    if (!token) {
+      this.setState({
+        isAuth: false,
+        username: null,
+        waiting: false,
+        error: '',
+      });
+      return;
+    }
+    try {
+      this.setState({
+        ...this.getState(),
+        waiting: true,
+      });
+      const response = await fetch(`/api/v1/users/self`, {
+        headers: {
+          ['X-Token']: token,
+          ['Content-Type']: 'application/json',
+        },
+      });
+      const json = await response.json();
+      this.setState({
+        isAuth: true,
+        username: json.result.profile.name,
+        waiting: false,
+        error: '',
+      });
+    } catch (error) {
+      console.log(error);
+      this.setState({
+        isAuth: false,
+        username: null,
+        waiting: false,
+        error: '',
+      });
+    }
   }
 
   /**
@@ -19,7 +67,7 @@ class AuthState extends StoreModule {
    * @param data {object}
    * @return {Promise<void>}
    */
-  async auth(data) {
+  async login(data) {
     // Установка признака ожидания загрузки
     this.setState({
       isAuth: false,
@@ -38,15 +86,18 @@ class AuthState extends StoreModule {
         body: JSON.stringify(data),
       });
       const json = await response.json();
-      if (json.error) throw json.error;
+      if (json.error) {
+        const errorMessages = json.error.data.issues
+          .map((i) => i.message)
+          .join('\n');
+        throw new Error(errorMessages);
+      }
       localStorage.setItem('USER_TOKEN', json.result.token);
-      localStorage.setItem('USER_NAME', json.result.user.profile.name);
 
       // Пользователь Авторизован
       this.setState(
         {
           isAuth: true,
-          token: json.result.token,
           username: json.result.user.profile.name,
           waiting: false,
           error: '',
@@ -54,11 +105,11 @@ class AuthState extends StoreModule {
         'Пользователь Авторизован'
       );
     } catch (e) {
+      console.log(e.message);
       this.setState({
         isAuth: false,
-        token: null,
-        username: null,
         waiting: false,
+        username: null,
         error: e.message,
       });
     }
@@ -79,7 +130,7 @@ class AuthState extends StoreModule {
       await fetch('/api/v1/users/sign', {
         method: 'DELETE',
         headers: {
-          ['X-Token']: this.getState().token,
+          ['X-Token']: localStorage.getItem('USER_TOKEN'),
           ['Content-Type']: 'application/json',
         },
       });
@@ -91,7 +142,6 @@ class AuthState extends StoreModule {
         waiting: false,
       });
       localStorage.removeItem('USER_TOKEN');
-      localStorage.removeItem('USER_NAME');
     } catch (e) {
       // Ошибка при загрузке
       // @todo В стейт можно положить информацию об ошибке

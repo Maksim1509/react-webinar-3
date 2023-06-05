@@ -1,4 +1,3 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import useSelector from '../hooks/use-selector';
 import Main from './main';
@@ -6,6 +5,8 @@ import Basket from './basket';
 import Article from './article';
 import Login from './login';
 import Profile from './profile';
+import useAuth from '../hooks/use-auth';
+import useInit from '../hooks/use-init';
 
 /**
  * Приложение
@@ -13,6 +14,10 @@ import Profile from './profile';
  */
 function App() {
   const activeModal = useSelector((state) => state.modals.name);
+  const { auth } = useAuth();
+  useInit(() => {
+    auth();
+  });
 
   return (
     <>

@@ -5,20 +5,17 @@ import useSelector from '../../hooks/use-selector';
 import Select from '../../components/select';
 import Input from '../../components/input';
 import SideLayout from '../../components/side-layout';
-import useInit from '../../hooks/use-init';
+import Spinner from '../../components/spinner';
 
 function CatalogFilter() {
   const store = useStore();
-
-  // useInit(() => {
-  //   store.actions.catalog.loadCategories();
-  // });
 
   const select = useSelector((state) => ({
     sort: state.catalog.params.sort,
     query: state.catalog.params.query,
     category: state.catalog.params.category,
-    categoriesOptions: state.catalog.categoriesList,
+    categoriesOptions: state.category.categoriesList,
+    waiting: state.category.waiting,
   }));
 
   const callbacks = {
@@ -56,12 +53,15 @@ function CatalogFilter() {
 
   return (
     <SideLayout padding='medium'>
-      <Select
-        type={'category'}
-        options={select.categoriesOptions}
-        value={select.category}
-        onChange={callbacks.onCategoryChange}
-      />
+      <Spinner active={select.waiting}>
+        <Select
+          type={'category'}
+          options={select.categoriesOptions}
+          value={select.category}
+          onChange={callbacks.onCategoryChange}
+        />
+      </Spinner>
+
       <Select
         type={'sort'}
         options={options.sort}

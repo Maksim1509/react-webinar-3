@@ -27,10 +27,11 @@ function Login() {
   }, [select.isAuth]);
 
   const callbacks = {
-    onSubmit: (data) => store.actions.user.auth(data),
+    onSubmit: (data) => store.actions.user.login(data),
+    setError: (message) => store.actions.user.setError(message),
   };
   const { t } = useTranslate();
-  console.log(select.waiting);
+
   return (
     <PageLayout head={<Header />}>
       <Head title={t('title')}>
@@ -40,6 +41,7 @@ function Login() {
       <Spinner active={select.waiting}>
         <Form
           onSubmit={callbacks.onSubmit}
+          setError={callbacks.setError}
           title={t('loginTitle')}
           loginLabel={t('loginLabel')}
           passwordLabel={t('passwordLabel')}

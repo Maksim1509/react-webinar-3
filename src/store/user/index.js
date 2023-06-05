@@ -6,6 +6,7 @@ import StoreModule from '../module';
 class AuthState extends StoreModule {
   initState() {
     return {
+      isChecked: false,
       isAuth: false,
       username: null,
       waiting: false,
@@ -15,6 +16,7 @@ class AuthState extends StoreModule {
 
   setError(message) {
     this.setState({
+      isChecked: false,
       isAuth: false,
       username: null,
       waiting: false,
@@ -23,9 +25,11 @@ class AuthState extends StoreModule {
   }
 
   async auth() {
+    // console.log('AUTH');
     const token = localStorage.getItem('USER_TOKEN');
     if (!token) {
       this.setState({
+        isChecked: true,
         isAuth: false,
         username: null,
         waiting: false,
@@ -46,14 +50,15 @@ class AuthState extends StoreModule {
       });
       const json = await response.json();
       this.setState({
+        isChecked: true,
         isAuth: true,
         username: json.result.profile.name,
         waiting: false,
         error: '',
       });
     } catch (error) {
-      console.log(error);
       this.setState({
+        isChecked: false,
         isAuth: false,
         username: null,
         waiting: false,
@@ -70,8 +75,8 @@ class AuthState extends StoreModule {
   async login(data) {
     // Установка признака ожидания загрузки
     this.setState({
+      isChecked: false,
       isAuth: false,
-      token: null,
       username: null,
       waiting: true,
       error: '',
@@ -97,6 +102,7 @@ class AuthState extends StoreModule {
       // Пользователь Авторизован
       this.setState(
         {
+          isChecked: true,
           isAuth: true,
           username: json.result.user.profile.name,
           waiting: false,
@@ -105,8 +111,9 @@ class AuthState extends StoreModule {
         'Пользователь Авторизован'
       );
     } catch (e) {
-      console.log(e.message);
+      // console.log(e.message);
       this.setState({
+        isChecked: false,
         isAuth: false,
         waiting: false,
         username: null,
@@ -136,6 +143,7 @@ class AuthState extends StoreModule {
       });
 
       this.setState({
+        isChecked: true,
         isAuth: false,
         token: null,
         username: null,
@@ -146,6 +154,7 @@ class AuthState extends StoreModule {
       // Ошибка при загрузке
       // @todo В стейт можно положить информацию об ошибке
       this.setState({
+        isChecked: true,
         isAuth: false,
         waiting: false,
       });

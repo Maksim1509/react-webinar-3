@@ -11,21 +11,31 @@ import Spinner from '../../components/spinner';
 import LocaleSelect from '../../containers/locale-select';
 import Header from '../../containers/header';
 import ProfileCard from '../../components/profile-card';
+import useAuth from '../../hooks/use-auth';
 
 function Profile() {
-  const navigate = useNavigate();
+  console.log('profile');
+  // const navigate = useNavigate();
   const store = useStore();
-
+  // const { auth, waiting } = useAuth();
   const select = useSelector((state) => ({
     isAuth: state.user.isAuth,
     profile: state.profile.profile,
     waiting: state.profile.waiting,
+    userWaiting: state.user.waiting,
   }));
 
   useInit(() => {
-    if (!select.isAuth) return navigate('/login');
+    // auth();
+    // if (!select.isAuth) {
+    //   auth();
+    //   if (!select.isAuth && !select.userWaiting) return navigate('/login');
+    // }
+    // console.log(waiting);
+    // console.log(select.userWaiting, select.isAuth, 'PROFILE');
+
     store.actions.profile.load();
-  }, [select.isAuth]);
+  }, []);
 
   const { t } = useTranslate();
 
@@ -35,7 +45,7 @@ function Profile() {
         <LocaleSelect />
       </Head>
       <Navigation />
-      <Spinner active={select.waiting}>
+      <Spinner active={select.userWaiting} hide={true}>
         <ProfileCard profile={select.profile} t={t} />
       </Spinner>
     </PageLayout>

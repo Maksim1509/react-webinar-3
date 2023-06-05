@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useStore from '../../hooks/use-store';
 import useSelector from '../../hooks/use-selector';
@@ -24,11 +24,15 @@ function Login() {
 
   useInit(() => {
     if (select.isAuth) return navigate('/profile');
+    // console.log(select.waiting);
   }, [select.isAuth]);
 
   const callbacks = {
-    onSubmit: (data) => store.actions.user.login(data),
-    setError: (message) => store.actions.user.setError(message),
+    onSubmit: useCallback((data) => store.actions.user.login(data), []),
+    setError: useCallback(
+      (message) => store.actions.user.setError(message),
+      []
+    ),
   };
   const { t } = useTranslate();
 
@@ -38,7 +42,7 @@ function Login() {
         <LocaleSelect />
       </Head>
       <Navigation />
-      <Spinner active={select.waiting}>
+      <Spinner active={select.waiting} hide={true}>
         <Form
           onSubmit={callbacks.onSubmit}
           setError={callbacks.setError}

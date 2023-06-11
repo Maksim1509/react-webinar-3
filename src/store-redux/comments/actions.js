@@ -1,8 +1,9 @@
-import listToTree from '../../utils/list-to-tree';
-
 export default {
   reply: (id) => {
     return { type: 'comments/reply', payload: { id } };
+  },
+  cancel: () => {
+    return { type: 'comments/cancel' };
   },
 
   /**
@@ -19,16 +20,14 @@ export default {
         const res = await services.api.request({
           url: `/api/v1/comments?fields=items(_id,text,dateCreate,author(profile(name)),parent(_id,_type),isDeleted),count&limit=*&search[parent]=${id}`,
         });
-        console.log(res);
-        // Товар загружен успешно
-        // const tree = listToTree(res.data.result.items);
-        // console.log(tree);
+
         dispatch({
           type: 'comments/load-success',
           payload: { data: res.data.result },
         });
       } catch (e) {
         //Ошибка загрузки
+        console.log(e);
         dispatch({ type: 'comments/load-error' });
       }
     };
@@ -42,18 +41,20 @@ export default {
 
       try {
         const res = await services.api.request({
-          url: `/api/v1/comments`,
+          url: `/api/v1/comments?fields=author(profile(name)),text,dateCreate,parent(_id, _type),isDeleted`,
           method: 'POST',
           headers: { ['X-Token']: token },
           body: JSON.stringify({ text, parent }),
         });
         console.log(res);
-        // Товар загружен успешно
+        // Коментарии загружен успешно
         dispatch({
           type: 'comments/add-success',
+          payload: { data: res.data.result },
         });
       } catch (e) {
         //Ошибка загрузки
+        console.log(e);
         dispatch({ type: 'comments/add-error' });
       }
     };

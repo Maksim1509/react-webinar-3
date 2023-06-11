@@ -1,5 +1,5 @@
-import { memo, useCallback, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { memo, useCallback } from 'react';
+import { useParams } from 'react-router-dom';
 import shallowequal from 'shallowequal';
 import { useSelector as useReduxSelector } from 'react-redux';
 import useSelector from '../../hooks/use-selector';
@@ -10,6 +10,8 @@ import { useDispatch } from 'react-redux';
 import commentsActions from '../../store-redux/comments/actions';
 import CommentsList from '../../components/comments-list';
 import ReplyForm from '../../components/reply-form';
+import CommentsRedirect from '../../components/comments-redirect';
+import CommentsTitle from '../../components/comments-title';
 
 function Comments() {
   const dispatch = useDispatch();
@@ -17,7 +19,7 @@ function Comments() {
 
   const reduxSelect = useReduxSelector(
     (state) => ({
-      list: state.comments.list,
+      commentsTree: state.comments.commentsTree,
       count: state.comments.count,
       waiting: state.comments.waiting,
       send: state.comments.send,
@@ -33,28 +35,31 @@ function Comments() {
 
   useInit(() => {
     dispatch(commentsActions.load(params.id));
-  }, [select.exists]);
-
-  useEffect(() => {
-    if (reduxSelect.send) dispatch(commentsActions.load(params.id));
-  }, [reduxSelect.send]);
+    dispatch(commentsActions.cancel());
+  }, []);
 
   const callbacks = {
-    // Колбэк на ввод в элементах формы
+    // Колбэк на установку id комментария для ответа
     onReply: useCallback((id) => {
-      console.log(id);
       dispatch(commentsActions.reply(id));
-      console.log(id);
     }, []),
 
     // Отправка комментария
     onSubmit: useCallback((text) => {
+      const _type = reduxSelect.commentReplyId ? 'comment' : 'article';
+      const _id = reduxSelect.commentReplyId || params.id;
       dispatch(
         commentsActions.add({
           text,
-          parent: { _id: params.id, _type: 'article' },
+          parent: { _id, _type },
         })
       );
+    }),
+
+    // Колбэк на сброс id комментария для ответа
+    onCancel: useCallback((e) => {
+      e.preventDefault();
+      dispatch(commentsActions.cancel());
     }),
   };
 
@@ -62,21 +67,31 @@ function Comments() {
 
   return (
     <Spinner active={select.waiting}>
-      <h2>
-        {t('comments')}: ({reduxSelect.count})
-      </h2>
+      <CommentsTitle title={t('comments')} count={reduxSelect.count} />
       <CommentsList
-        list={reduxSelect.list}
+        list={reduxSelect.commentsTree}
         onReply={callbacks.onReply}
         commentReplyId={reduxSelect.commentReplyId}
         t={t}
         replyForm={
-          <ReplyForm
-            title={t('reply.titleNewReply')}
-            labelSend={t('reply.labelSend')}
-            labelCancel={t('reply.labelCancel')}
-            onSubmit={callbacks.onSubmit}
-          />
+          select.exists ? (
+            <ReplyForm
+              title={t('reply.titleNewReply')}
+              labelSend={t('reply.labelSend')}
+              labelCancel={t('reply.labelCancel')}
+              onSubmit={callbacks.onSubmit}
+              onCancel={callbacks.onCancel}
+              type={'comment'}
+            />
+          ) : (
+            <CommentsRedirect
+              linkText={t('comments.linkText')}
+              text={t('reply.text')}
+              type={'reply'}
+              onCancel={callbacks.onCancel}
+              labelCancel={t('reply.labelCancel')}
+            />
+          )
         }
       />
       {select.exists && !reduxSelect.commentReplyId && (
@@ -84,9 +99,15 @@ function Comments() {
           title={t('reply.titleNewComment')}
           labelSend={t('reply.labelSend')}
           onSubmit={callbacks.onSubmit}
+          type={'article'}
         />
       )}
-      {!select.exists && <Link to={'/login'}>Войдите</Link>}
+      {!select.exists && !reduxSelect.commentReplyId && (
+        <CommentsRedirect
+          linkText={t('comments.linkText')}
+          text={t('comments.text')}
+        />
+      )}
     </Spinner>
   );
 }

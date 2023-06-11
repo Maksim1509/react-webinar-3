@@ -1,38 +1,31 @@
 import { memo } from 'react';
+import { cn as bem } from '@bem-react/classname';
 import PropTypes from 'prop-types';
-import Item from '../item';
 import './style.css';
 import CommentsItem from '../comments-item';
-import Input from '../../components/input';
-import Field from '../../components/field';
-import ReplyForm from '../reply-form';
 
 function CommentsList(props) {
+  const cn = bem('CommentsList');
   return (
-    <div className='CommentsList'>
+    <div className={cn({ depth: props.item && props.item.depth > 6 })}>
       {props.list.map((item) => (
         <div key={item._id} className='CommentsList-item'>
-          <CommentsItem
-            item={item}
-            onReply={props.onReply}
-            replyLabel={props.t('reply')}
-          />
-          {props.commentReplyId === item._id && <>{props.replyForm}</>}
+          <CommentsItem {...props} item={item} />
+          {props.commentReplyId === item._id && (
+            <div className='CommentsList-form'>{props.replyForm}</div>
+          )}
         </div>
       ))}
     </div>
   );
 }
 
-// List.propTypes = {
-//   list: PropTypes.arrayOf(PropTypes.shape({
-//     _id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-//   })).isRequired,
-//   renderItem: PropTypes.func,
-// };
+CommentsList.propTypes = {
+  props: PropTypes.any,
+};
 
-// List.defaultProps = {
-//   renderItem: (item) => {},
-// }
+CommentsList.defaultProps = {
+  renderItem: (item) => {},
+};
 
 export default memo(CommentsList);

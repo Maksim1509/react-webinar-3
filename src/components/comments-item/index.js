@@ -1,9 +1,9 @@
-import { memo, useState } from 'react';
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 import { cn as bem } from '@bem-react/classname';
-import numberFormat from '../../utils/number-format';
 import './style.css';
-import { Link } from 'react-router-dom';
+import CommentsList from '../comments-list';
+import dateToString from '../../utils/date-to-string';
 
 function CommentsItem(props) {
   const cn = bem('CommentsItem');
@@ -14,34 +14,30 @@ function CommentsItem(props) {
       props.onReply(props.item._id);
     },
   };
+  const { day, month, year, time } = dateToString(props.item.dateCreate);
   return (
-    <div className={cn()}>
-      <div className={cn('name')}>{props.item.author.profile.name}</div>
-      <div className={cn('date')}>{props.item.dateCreate}</div>
-      <p className={cn('text')}>{props.item.text}</p>
-      <a className={cn('link')} onClick={callbacks.onReply}>
-        {props.replyLabel}
-      </a>
-    </div>
+    <>
+      <div className={cn()}>
+        <div className={cn('name')}>{props.item.author.profile.name}</div>
+        <div className={cn('date')}>
+          {`${day} ${props.t(month)} ${year} ${props.t('at')} ${time}`}
+        </div>
+        <p className={cn('text')}>{props.item.text}</p>
+        <a className={cn('link')} onClick={callbacks.onReply}>
+          {props.t('reply')}
+        </a>
+        {!!props.item.children.length && (
+          <div className={cn('list')}>
+            <CommentsList {...props} list={props.item.children} />
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 
-// Item.propTypes = {
-//   item: PropTypes.shape({
-//     _id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-//     title: PropTypes.string,
-//     price: PropTypes.number,
-//   }).isRequired,
-//   link: PropTypes.string,
-//   onAdd: PropTypes.func,
-//   labelCurr: PropTypes.string,
-//   labelAdd: PropTypes.string,
-// };
-
-// Item.defaultProps = {
-//   onAdd: () => {},
-//   labelCurr: '₽',
-//   labelAdd: 'Добавить',
-// };
+CommentsItem.propTypes = {
+  props: PropTypes.any,
+};
 
 export default memo(CommentsItem);

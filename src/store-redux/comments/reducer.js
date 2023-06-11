@@ -1,9 +1,11 @@
+import listToTree from '../../utils/list-to-tree';
+
 // Начальное состояние
 const initialState = {
   list: [],
+  commentsTree: [],
   count: 0,
   waiting: false, // признак ожидания загрузки
-  send: false,
   commentReplyId: null,
 };
 
@@ -15,8 +17,10 @@ function reducer(state = initialState, action) {
 
     case 'comments/load-success':
       const comments = action.payload.data.items.filter((i) => !i.isDeleted);
+
       return {
         ...state,
+        commentsTree: listToTree(comments),
         list: comments,
         waiting: false,
         count: comments.length,
@@ -26,16 +30,27 @@ function reducer(state = initialState, action) {
       return { ...state, waiting: false }; //@todo текст ошибки сохранить?
 
     case 'comments/add-start':
-      return { ...state, waiting: true, send: false };
+      return { ...state, waiting: true };
 
     case 'comments/add-success':
-      return { ...state, waiting: false, send: true };
+      const comment = action.payload.data;
+      const list = [...state.list, comment];
+      return {
+        ...state,
+        commentsTree: listToTree(list),
+        list,
+        count: state.count + 1,
+        waiting: false,
+      };
 
     case 'comments/add-error':
-      return { ...state, waiting: false, send: false }; //@todo текст ошибки сохранить?
+      return { ...state, waiting: false }; //@todo текст ошибки сохранить?
 
     case 'comments/reply':
       return { ...state, commentReplyId: action.payload.id };
+
+    case 'comments/cancel':
+      return { ...state, commentReplyId: null };
 
     default:
       // Нет изменений

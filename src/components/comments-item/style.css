@@ -2,8 +2,6 @@
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
-  margin-bottom: 30px;
-  padding: 0 40px;
   gap: 10px;
   font-size: 12px;
   line-height: 14px;
@@ -14,7 +12,9 @@
   font-size: 14px;
   line-height: 16px;
   padding: 0;
+  padding-right: 10px;
   margin: 0;
+  word-break: normal;
 }
 
 .CommentsItem-name {
@@ -25,4 +25,14 @@
   text-decoration: none;
   color: #0087e9;
   cursor: pointer;
+  width: 100%;
+}
+
+.CommentsItem-date {
+  color: #666666;
+}
+
+.CommentsItem-list {
+  width: 100%;
+  margin-top: 20px;
 }

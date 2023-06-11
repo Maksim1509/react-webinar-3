@@ -15,6 +15,7 @@ import shallowequal from 'shallowequal';
 import articleActions from '../../store-redux/article/actions';
 import commentsActions from '../../store-redux/comments/actions';
 import Comments from '../../containers/comments';
+import SideLayout from '../../components/side-layout';
 
 function Article() {
   const store = useStore();
@@ -22,10 +23,7 @@ function Article() {
   // Параметры из пути /articles/:id
   const params = useParams();
   useInit(() => {
-    //store.actions.article.load(params.id);
     dispatch(articleActions.load(params.id));
-    // dispatch(commentsActions.load());
-    // dispatch(commentsActions.add({ text: 'some text' }));
   }, [params.id]);
   const select = useSelector(
     (state) => ({
@@ -59,7 +57,9 @@ function Article() {
           t={t}
         />
       </Spinner>
-      <Comments />
+      <SideLayout padding={'large'}>
+        <Comments />
+      </SideLayout>
     </PageLayout>
   );
 }

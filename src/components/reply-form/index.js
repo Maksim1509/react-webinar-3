@@ -5,15 +5,18 @@ import './style.css';
 
 function ReplyForm(props) {
   const [value, setValue] = useState('');
+  const [error, setError] = useState(null);
   const textareaRef = useRef(null);
 
   // Обработчик изменений в поле
   const callbacks = {
     onChange: useCallback((event) => {
+      setError(null);
       setValue(event.target.value);
     }),
     onSubmit: useCallback((event) => {
       event.preventDefault();
+      if (value.trim().length === 0) return setError('required');
       props.onSubmit(value.trim());
       setValue(() => '');
       textareaRef.current.focus();
@@ -38,6 +41,7 @@ function ReplyForm(props) {
         required
         ref={textareaRef}
       />
+      {error && <div>Заполните это поле</div>}
       <div>
         <button className={cn('btn')} type='submit'>
           {props.labelSend}

@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import shallowequal from 'shallowequal';
 import { useSelector as useReduxSelector } from 'react-redux';
@@ -33,9 +33,11 @@ function Comments() {
     waiting: state.session.waiting,
   }));
 
-  useInit(() => {
+  useEffect(() => {
     dispatch(commentsActions.load(params.id));
-    dispatch(commentsActions.cancel());
+    return () => {
+      dispatch(commentsActions.cancel());
+    };
   }, []);
 
   const callbacks = {
@@ -58,7 +60,7 @@ function Comments() {
 
     // Колбэк на сброс id комментария для ответа
     onCancel: useCallback((e) => {
-      e.preventDefault();
+      if (e) e.preventDefault();
       dispatch(commentsActions.cancel());
     }),
   };

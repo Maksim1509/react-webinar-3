@@ -92,6 +92,7 @@ function Comments() {
               type={'reply'}
               onCancel={callbacks.onCancel}
               labelCancel={t('reply.labelCancel')}
+              redirect='/login'
             />
           )
         }
@@ -108,6 +109,7 @@ function Comments() {
         <CommentsRedirect
           linkText={t('comments.linkText')}
           text={t('comments.text')}
+          redirect='/login'
         />
       )}
     </Spinner>

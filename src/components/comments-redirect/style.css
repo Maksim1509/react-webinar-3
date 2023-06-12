@@ -8,6 +8,7 @@
 .CommentsRedirect-link {
   color: #0087e9;
   text-decoration: underline;
+  cursor: pointer;
 }
 
 .CommentsRedirect-cancel {

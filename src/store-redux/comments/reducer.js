@@ -41,6 +41,7 @@ function reducer(state = initialState, action) {
         list,
         count: state.count + 1,
         waiting: false,
+        commentReplyId: null,
       };
 
     case 'comments/add-error':

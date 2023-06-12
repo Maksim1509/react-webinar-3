@@ -14,7 +14,7 @@ function ReplyForm(props) {
     }),
     onSubmit: useCallback((event) => {
       event.preventDefault();
-      props.onSubmit(value);
+      props.onSubmit(value.trim());
       setValue(() => '');
       textareaRef.current.focus();
     }),

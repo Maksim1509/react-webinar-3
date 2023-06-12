@@ -19,12 +19,15 @@ function ReplyForm(props) {
       if (value.trim().length === 0) return setError('required');
       props.onSubmit(value.trim());
       setValue(() => '');
-      textareaRef.current.focus();
     }),
   };
 
   useEffect(() => {
-    textareaRef.current.focus();
+    textareaRef.current?.focus();
+    textareaRef.current?.scrollIntoView({
+      block: 'center',
+      behavior: 'smooth',
+    });
   }, []);
 
   const cn = bem('ReplyForm');
@@ -39,7 +42,7 @@ function ReplyForm(props) {
         value={value}
         onChange={callbacks.onChange}
         required
-        ref={textareaRef}
+        ref={props.type === 'comment' ? textareaRef : null}
       />
       {error && <div>Заполните это поле</div>}
       <div>
